@@ -25,3 +25,29 @@ body {
 
   background-attachment: fixed;
 }
+
+/* =====================================
+   ANIMAÇÕES DO PORTFÓLIO
+===================================== */
+
+@keyframes portfolioFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .portfolio-fade-up {
+    animation: portfolioFadeUp 650ms ease-out both;
+  }
+
+  .portfolio-delay-1 {
+    animation-delay: 150ms;
+  }
+}
