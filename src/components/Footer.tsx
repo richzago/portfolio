@@ -7,7 +7,7 @@ export default async function Footer() {
   const currentYear = await getCurrentYear();
 
   return (
-    <footer className="border-t border-zinc-800">
+    <footer className="border-t border-blue-950/60 bg-[#060b16]/50">
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 p-6 text-sm text-zinc-400 md:flex-row">
         <p>© {currentYear} Zago. Todos os direitos reservados.</p>
 
