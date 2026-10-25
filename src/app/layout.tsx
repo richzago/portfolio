@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import Header from "@/src/components/Header";
+import Footer from "@/src/components/Footer";
 import "./globals.css";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
-  title: "Zago | Desenvolvedor",
-  description: "Portfólio pessoal e projetos de desenvolvimento.",
+  title: "Richard Zago | Desenvolvedor Full Stack",
+  description:
+    "Portfólio de Richard Zago, desenvolvedor Full Stack com foco em Back-end.",
 };
 
 export default function RootLayout({
@@ -15,10 +16,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className="bg-zinc-950 text-zinc-100">
+      <body className="flex min-h-screen flex-col text-slate-100">
         <Header />
 
-        <main className="mx-auto min-h-screen max-w-5xl p-6">{children}</main>
+        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 lg:px-8">
+          {children}
+        </main>
+
         <Footer />
       </body>
     </html>
