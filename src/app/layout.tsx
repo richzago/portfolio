@@ -2,11 +2,45 @@ import type { Metadata } from "next";
 import Header from "@/src/components/Header";
 import Footer from "@/src/components/Footer";
 import "./globals.css";
+import { siteDescription, siteName, siteUrl } from "@/src/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Richard Zago | Desenvolvedor Full Stack",
-  description:
-    "Portfólio de Richard Zago, desenvolvedor Full Stack com foco em Back-end.",
+  metadataBase: new URL(siteUrl),
+
+  title: {
+    default: `${siteName} | Desenvolvedor Full Stack`,
+    template: `%s | ${siteName}`,
+  },
+
+  description: siteDescription,
+
+  applicationName: "Portfólio Richard Zago",
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+
+  alternates: {
+    canonical: "/",
+  },
+
+  openGraph: {
+    title: `${siteName} | Desenvolvedor Full Stack`,
+    description: siteDescription,
+    url: "/",
+    siteName,
+    locale: "pt_BR",
+    type: "website",
+    images: ["/opengraph-image"],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteName} | Desenvolvedor Full Stack`,
+    description: siteDescription,
+    images: ["/opengraph-image"],
+  },
 };
 
 export default function RootLayout({
