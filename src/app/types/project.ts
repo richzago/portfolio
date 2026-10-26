@@ -10,4 +10,5 @@ export interface Project {
   featured?: boolean;
   githubUrl?: string;
   demoUrl?: string;
+  year: number;
 }

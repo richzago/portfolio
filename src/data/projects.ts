@@ -22,6 +22,7 @@ export const projects: Project[] = [
     category: "Back-end",
     featured: true,
     githubUrl: "https://github.com/richzago/api-crud-users",
+    year: 2023,
   },
 
   {
@@ -44,6 +45,7 @@ export const projects: Project[] = [
     category: "Back-end",
     featured: true,
     githubUrl: "https://github.com/richzago/api-kimoveis",
+    year: 2023,
   },
 
   {
@@ -56,6 +58,7 @@ export const projects: Project[] = [
     category: "Back-end",
     featured: true,
     githubUrl: "https://github.com/richzago/bandkamp",
+    year: 2022,
   },
 
   {
@@ -68,18 +71,9 @@ export const projects: Project[] = [
     category: "Back-end",
     featured: true,
     githubUrl: "https://github.com/richzago/kenzie-buster",
+    year: 2022,
   },
 
-  {
-    id: "zagoquest",
-    title: "ZagoQuest",
-    description:
-      "MMORPG 2D inspirado em Tibia, com servidor multiplayer desenvolvido em Node.js e TypeScript e cliente em Unity. Projeto focado em arquitetura de sistemas, comunicação em tempo real e lógica de jogos.",
-    image: "/images/projects/zagoquest.png",
-    technologies: ["Node.js", "TypeScript", "WebSocket", "Unity", "C#"],
-    category: "Full Stack",
-    featured: true,
-  },
   {
     id: "transaction-hub",
     title: "Transaction Hub",
@@ -90,6 +84,7 @@ export const projects: Project[] = [
     category: "Back-end",
     featured: true,
     githubUrl: "https://github.com/richzago/transaction-hub",
+    year: 2023,
   },
 
   {
@@ -97,11 +92,12 @@ export const projects: Project[] = [
     title: "Zago Bank",
     description:
       "Sistema web de transações financeiras desenvolvido em Laravel, com API para gerenciamento de usuários, depósitos e transferências entre contas.",
-    image: "/images/projects/zago-bank.png",
+    image: "/images/projects/api.png",
     technologies: ["PHP", "Laravel", "MySQL", "Docker", "Composer"],
-    category: "Full Stack",
+    category: "Back-end",
     featured: true,
     githubUrl: "https://github.com/richzago/zago-bank",
+    year: 2023,
   },
 
   // ========================================
@@ -126,6 +122,7 @@ export const projects: Project[] = [
     ],
     category: "Back-end",
     githubUrl: "https://github.com/richzago/movies-auth",
+    year: 2023,
   },
 
   {
@@ -137,17 +134,19 @@ export const projects: Project[] = [
     technologies: ["React", "JavaScript", "Docker"],
     category: "Front-end",
     githubUrl: "https://github.com/richzago/pokemon-fidelizoume",
+    year: 2023,
   },
 
   {
     id: "hamburguer-site",
     title: "Hamburgueria",
     description:
-      "Aplicação responsiva de hamburgueria com integração de API, catálogo de produtos, carrinho de compras, cálculo de valores e persistência local.",
+      "Aplicação responsiva de hamburgueria com integração de API (que não está mais disponível), catálogo de produtos, carrinho de compras, cálculo de valores e persistência local.",
     image: "/images/projects/hamburguer-site.png",
     technologies: ["React", "JavaScript", "Styled Components", "localStorage"],
     category: "Front-end",
     githubUrl: "https://github.com/richzago/hamburguer-site",
+    year: 2022,
   },
 
   {
@@ -159,6 +158,7 @@ export const projects: Project[] = [
     technologies: ["Python", "Django"],
     category: "Full Stack",
     githubUrl: "https://github.com/richzago/converter-cnab",
+    year: 2023,
   },
 
   {
@@ -177,6 +177,7 @@ export const projects: Project[] = [
     ],
     category: "Full Stack",
     githubUrl: "https://github.com/richzago/clients-pdf-fullstack",
+    year: 2023,
   },
 
   {
@@ -194,6 +195,7 @@ export const projects: Project[] = [
     ],
     category: "Back-end",
     githubUrl: "https://github.com/richzago/api-crud-users-adm",
+    year: 2023,
   },
 
   {
@@ -205,6 +207,7 @@ export const projects: Project[] = [
     technologies: ["PHP", "MySQL", "Composer"],
     category: "Full Stack",
     githubUrl: "https://github.com/richzago/crud-form-php",
+    year: 2023,
   },
 
   // ========================================
@@ -219,5 +222,6 @@ export const projects: Project[] = [
     image: "/images/projects/portfolio.png",
     technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
     category: "Front-end",
+    year: 2026,
   },
 ];
