@@ -98,6 +98,7 @@ export const projects: Project[] = [
     featured: true,
     githubUrl: "https://github.com/richzago/zago-bank",
     year: 2023,
+    updatedYear: 2026,
   },
 
   // ========================================
@@ -159,6 +160,7 @@ export const projects: Project[] = [
     category: "Full Stack",
     githubUrl: "https://github.com/richzago/converter-cnab",
     year: 2023,
+    updatedYear: 2026,
   },
 
   {
@@ -178,6 +180,7 @@ export const projects: Project[] = [
     category: "Full Stack",
     githubUrl: "https://github.com/richzago/clients-pdf-fullstack",
     year: 2023,
+    updatedYear: 2026,
   },
 
   {
@@ -208,6 +211,7 @@ export const projects: Project[] = [
     category: "Full Stack",
     githubUrl: "https://github.com/richzago/crud-form-php",
     year: 2023,
+    updatedYear: 2026,
   },
 
   // ========================================

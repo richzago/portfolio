@@ -7,8 +7,11 @@ export interface Project {
   image: string;
   technologies: string[];
   category: ProjectCategory;
+
+  year: number;
+  updatedYear?: number;
+
   featured?: boolean;
   githubUrl?: string;
   demoUrl?: string;
-  year: number;
 }

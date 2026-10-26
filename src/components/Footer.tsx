@@ -7,13 +7,13 @@ export default async function Footer() {
   const currentYear = await getCurrentYear();
 
   return (
-    <footer className="border-t border-blue-950/60 bg-[#060b16]/50">
-      <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 p-6 text-sm text-zinc-400 md:flex-row">
-        <p>© {currentYear} Zago. Todos os direitos reservados.</p>
+    <footer className="border-t border-[#24344d] bg-[#060b16]/60">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-6 text-center text-sm text-slate-400 sm:px-6 md:flex-row md:text-left lg:px-8">
+        <p>© {currentYear} Richard Zago. Todos os direitos reservados.</p>
 
-        <div className="flex gap-6">
+        <div className="flex flex-wrap items-center justify-center gap-6">
           <a
-            href="https://github.com/"
+            href="https://github.com/richzago"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-colors hover:text-blue-400"
@@ -22,7 +22,7 @@ export default async function Footer() {
           </a>
 
           <a
-            href="https://linkedin.com/"
+            href="https://www.linkedin.com/in/richzago/"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-colors hover:text-blue-400"

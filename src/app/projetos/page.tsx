@@ -1,5 +1,12 @@
+import { createPageMetadata } from "@/src/lib/seo";
 import ProjectGallery from "@/src/components/ProjectGallery";
 import { projects } from "@/src/data/projects";
+
+export const metadata = createPageMetadata(
+  "Projetos",
+  "Conheça meus projetos em Back-end, APIs REST, Front-end, bancos de dados e desenvolvimento Full Stack.",
+  "/projetos",
+);
 
 export default function Projetos() {
   return (

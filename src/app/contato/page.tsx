@@ -3,31 +3,109 @@
 import { useState, type SubmitEvent } from "react";
 
 import { Mail, Send, ArrowUpRight, MessageSquare } from "lucide-react";
-
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
+type FormFeedback = {
+  type: "success" | "error";
+  message: string;
+};
+
+const contactEmail = "zaguinhoo97@gmail.com";
+
 export default function Contato() {
+  // =========================
+  // ESTADOS DO FORMULÁRIO
+  // =========================
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
 
-  const contactEmail = "zaguinhoo97@gmail.com";
+  // Campo oculto para proteção simples contra spam
+  const [website, setWebsite] = useState("");
 
-  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
+  // Controle de envio e feedback
+  const [isSending, setIsSending] = useState(false);
+  const [feedback, setFeedback] = useState<FormFeedback | null>(null);
+
+  // =========================
+  // FUNÇÕES
+  // =========================
+
+  function clearFeedback() {
+    setFeedback(null);
+  }
+
+  async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    const emailSubject = encodeURIComponent(`[Portfólio] ${subject.trim()}`);
+    if (isSending) return;
 
-    const emailBody = encodeURIComponent(
-      `Nome: ${name.trim()}\n` +
-        `E-mail: ${email.trim()}\n\n` +
-        `Mensagem:\n${message.trim()}`,
-    );
+    setIsSending(true);
+    setFeedback(null);
 
-    const mailto = `mailto:${contactEmail}?subject=${emailSubject}&body=${emailBody}`;
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          subject: subject.trim(),
+          message: message.trim(),
+          website,
+        }),
+      });
 
-    window.location.href = mailto;
+      // Verifica se a API retornou JSON.
+      const contentType = response.headers.get("content-type");
+
+      if (!contentType?.includes("application/json")) {
+        console.error(
+          "Resposta inesperada da API:",
+          response.status,
+          response.statusText,
+        );
+
+        throw new Error(
+          `Erro na comunicação com o servidor (HTTP ${response.status}).`,
+        );
+      }
+
+      const result: { message?: string } = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          result.message || "Não foi possível enviar a mensagem.",
+        );
+      }
+
+      setFeedback({
+        type: "success",
+        message: result.message || "Mensagem enviada com sucesso!",
+      });
+
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+      setWebsite("");
+    } catch (error) {
+      console.error("Erro no formulário:", error);
+
+      setFeedback({
+        type: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Ocorreu um erro inesperado. Tente novamente.",
+      });
+    } finally {
+      setIsSending(false);
+    }
   }
 
   return (
@@ -63,6 +141,7 @@ export default function Contato() {
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         {/* =====================================
             COLUNA ESQUERDA
+            INFORMAÇÕES DE CONTATO
         ===================================== */}
 
         <div>
@@ -79,6 +158,7 @@ export default function Contato() {
 
           <div className="space-y-4">
             {/* E-MAIL */}
+
             <a
               href={`mailto:${contactEmail}`}
               className="group flex items-center gap-4 rounded-xl border border-[#24344d] bg-[#101e34]/70 p-4 transition-all duration-300 hover:border-blue-500/40 hover:bg-[#142746] motion-safe:hover:-translate-y-0.5 motion-reduce:transition-none"
@@ -102,6 +182,7 @@ export default function Contato() {
             </a>
 
             {/* LINKEDIN */}
+
             <a
               href="https://www.linkedin.com/in/richzago/"
               target="_blank"
@@ -127,6 +208,7 @@ export default function Contato() {
             </a>
 
             {/* GITHUB */}
+
             <a
               href="https://github.com/richzago"
               target="_blank"
@@ -152,7 +234,8 @@ export default function Contato() {
             </a>
           </div>
 
-          {/* Mensagem complementar */}
+          {/* MENSAGEM COMPLEMENTAR */}
+
           <div className="mt-8 flex items-start gap-3 rounded-xl border border-blue-900/30 bg-blue-950/20 p-4">
             <MessageSquare
               size={19}
@@ -171,7 +254,8 @@ export default function Contato() {
         </div>
 
         {/* =====================================
-            COLUNA DIREITA - FORMULÁRIO
+            COLUNA DIREITA
+            FORMULÁRIO DE CONTATO
         ===================================== */}
 
         <div className="h-fit rounded-2xl border border-[#24344d] bg-[#101e34]/70 p-5 shadow-xl shadow-black/10 sm:p-7">
@@ -181,12 +265,36 @@ export default function Contato() {
             </h2>
 
             <p className="mt-2 text-sm text-slate-400">
-              Preencha os campos abaixo para preparar um e-mail de contato.
+              Preencha os campos abaixo para enviar sua mensagem diretamente.
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form
+            onSubmit={handleSubmit}
+            aria-busy={isSending}
+            className="relative space-y-5"
+          >
+            {/* HONEYPOT ANTISPAM */}
+
+            <div
+              className="pointer-events-none absolute top-0 left-0 h-px w-px overflow-hidden opacity-0"
+              aria-hidden="true"
+            >
+              <label htmlFor="website">Não preencha este campo</label>
+
+              <input
+                id="website"
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={website}
+                onChange={(event) => setWebsite(event.target.value)}
+              />
+            </div>
+
             {/* NOME */}
+
             <div>
               <label
                 htmlFor="name"
@@ -200,16 +308,21 @@ export default function Contato() {
                 name="name"
                 type="text"
                 required
+                minLength={2}
                 maxLength={100}
                 autoComplete="name"
                 placeholder="Seu nome"
                 value={name}
-                onChange={(event) => setName(event.target.value)}
+                onChange={(event) => {
+                  setName(event.target.value);
+                  clearFeedback();
+                }}
                 className="w-full rounded-lg border border-[#304158] bg-[#0b1629] px-4 py-3 text-sm text-slate-100 outline-none transition-colors placeholder:text-slate-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30"
               />
             </div>
 
             {/* E-MAIL */}
+
             <div>
               <label
                 htmlFor="email"
@@ -227,12 +340,16 @@ export default function Contato() {
                 autoComplete="email"
                 placeholder="seuemail@exemplo.com"
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                onChange={(event) => {
+                  setEmail(event.target.value);
+                  clearFeedback();
+                }}
                 className="w-full rounded-lg border border-[#304158] bg-[#0b1629] px-4 py-3 text-sm text-slate-100 outline-none transition-colors placeholder:text-slate-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30"
               />
             </div>
 
             {/* ASSUNTO */}
+
             <div>
               <label
                 htmlFor="subject"
@@ -246,15 +363,20 @@ export default function Contato() {
                 name="subject"
                 type="text"
                 required
+                minLength={3}
                 maxLength={150}
                 placeholder="Sobre o que deseja conversar?"
                 value={subject}
-                onChange={(event) => setSubject(event.target.value)}
+                onChange={(event) => {
+                  setSubject(event.target.value);
+                  clearFeedback();
+                }}
                 className="w-full rounded-lg border border-[#304158] bg-[#0b1629] px-4 py-3 text-sm text-slate-100 outline-none transition-colors placeholder:text-slate-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30"
               />
             </div>
 
             {/* MENSAGEM */}
+
             <div>
               <label
                 htmlFor="message"
@@ -268,26 +390,50 @@ export default function Contato() {
                 name="message"
                 required
                 rows={6}
+                minLength={10}
                 maxLength={3000}
                 placeholder="Escreva sua mensagem..."
                 value={message}
-                onChange={(event) => setMessage(event.target.value)}
+                onChange={(event) => {
+                  setMessage(event.target.value);
+                  clearFeedback();
+                }}
                 className="w-full resize-y rounded-lg border border-[#304158] bg-[#0b1629] px-4 py-3 text-sm text-slate-100 outline-none transition-colors placeholder:text-slate-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/30"
               />
             </div>
 
-            {/* BOTÃO */}
+            {/* BOTÃO DE ENVIO */}
+
             <button
               type="submit"
-              className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-500 active:scale-[0.98] motion-safe:hover:-translate-y-0.5 motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+              disabled={isSending}
+              className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
             >
-              <Send size={17} />
-              Preparar e-mail
+              <Send size={17} aria-hidden="true" />
+
+              {isSending ? "Enviando..." : "Enviar mensagem"}
             </button>
 
+            {/* FEEDBACK DE ENVIO */}
+
+            {feedback && (
+              <p
+                role={feedback.type === "error" ? "alert" : "status"}
+                className={`rounded-lg border px-4 py-3 text-sm ${
+                  feedback.type === "success"
+                    ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
+                    : "border-red-500/30 bg-red-500/10 text-red-300"
+                }`}
+              >
+                {feedback.message}
+              </p>
+            )}
+
+            {/* INFORMAÇÃO COMPLEMENTAR */}
+
             <p className="text-center text-xs leading-5 text-slate-500">
-              O botão abrirá seu aplicativo de e-mail com a mensagem preenchida.
-              Confirme o envio por lá.
+              Sua mensagem será enviada diretamente pelo formulário. Responderei
+              pelo e-mail informado.
             </p>
           </form>
         </div>
