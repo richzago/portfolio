@@ -17,7 +17,7 @@ import { projects } from "@/src/data/projects";
 
 // Deixe vazio até adicionar sua fotografia.
 // Depois use: "/images/perfil.jpg"
-const profileImage: string = "";
+const profileImage: string = "/images/projects/profile.png";
 
 const specialties = [
   {
